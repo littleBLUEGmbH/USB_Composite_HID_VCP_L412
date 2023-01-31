@@ -27,7 +27,8 @@
 #include "usbd_custom_hid_if.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "usbd_cdc.h"
+#include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN PV */
@@ -48,7 +49,8 @@ extern USBD_DescriptorsTypeDef FS_Desc;
  * -- Insert your variables declaration here --
  */
 /* USER CODE BEGIN 0 */
-
+uint8_t cdc_ep[3]={0x81,0x1,0x82};
+uint8_t hid_ep[]={0x83};
 /* USER CODE END 0 */
 
 /*
@@ -69,18 +71,27 @@ void MX_USB_DEVICE_Init(void)
   /* USER CODE END USB_DEVICE_Init_PreTreatment */
 
   /* Init Device Library, add supported class and start the library. */
-  if (USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
+
+  if (USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS) != USBD_OK)
   {
     Error_Handler();
   }
+  if (USBD_RegisterClassComposite(&hUsbDeviceFS, &USBD_CDC,CLASS_TYPE_CDC,cdc_ep) != USBD_OK)
+  {
+    Error_Handler();
+  }
+
   if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CUSTOM_HID) != USBD_OK)
   {
     Error_Handler();
   }
-  if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceFS, &USBD_CustomHID_fops_FS) != USBD_OK)
+
+  if (USBD_RegisterClassComposite(&hUsbDeviceFS, &USBD_CUSTOM_HID,CLASS_TYPE_HID,hid_ep) != USBD_OK)
   {
     Error_Handler();
   }
+
+
   if (USBD_Start(&hUsbDeviceFS) != USBD_OK)
   {
     Error_Handler();
