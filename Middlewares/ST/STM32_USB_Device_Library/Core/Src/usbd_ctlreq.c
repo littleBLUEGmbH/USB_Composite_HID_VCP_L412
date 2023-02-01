@@ -969,10 +969,15 @@ void USBD_ParseSetupRequest(USBD_SetupReqTypedef *req, uint8_t *pdata)
   * @param  req: usb request
   * @retval None
   */
+uint32_t catch=0;
+
 void USBD_CtlError(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
 {
   UNUSED(req);
-
+  if(catch==1){
+	  __NOP();
+  }
+catch++;
   (void)USBD_LL_StallEP(pdev, 0x80U);
   (void)USBD_LL_StallEP(pdev, 0U);
 }

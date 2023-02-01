@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "usbd_custom_hid_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +56,9 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint8_t buffer[8];
 
+extern USBD_HandleTypeDef hUsbDeviceFS;
 /* USER CODE END 0 */
 
 /**
@@ -90,16 +92,30 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-
+  buffer[0]=1;//reportID
+  buffer[1]=0;//modifier
+  buffer[2]=0;//OEM
+  buffer[3]=0x04;//keycode data - a
+  buffer[4]=0;//keycode data
+  buffer[5]=0;//keycode data
+  buffer[6]=0;//keycode data
+  buffer[7]=0;//keycode data
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_Delay(2000);
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+      buffer[3]=0x4E;//keycode data - PgDwn press
+      USBD_CUSTOM_HID_SendReport_FS(buffer,8);
+      HAL_Delay(100);
+      buffer[3]=0x0;//keycode data - PgDwn release
+      USBD_CUSTOM_HID_SendReport_FS(buffer,8);
+      HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

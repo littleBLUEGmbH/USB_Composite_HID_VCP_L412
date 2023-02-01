@@ -50,7 +50,7 @@ extern USBD_DescriptorsTypeDef FS_Desc;
  */
 /* USER CODE BEGIN 0 */
 uint8_t cdc_ep[3]={0x81,0x1,0x82};
-uint8_t hid_ep[]={0x83};
+uint8_t hid_ep[]={0x83,0x03};
 /* USER CODE END 0 */
 
 /*
@@ -85,12 +85,12 @@ void MX_USB_DEVICE_Init(void)
     Error_Handler();
   }
 
-  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CUSTOM_HID) != USBD_OK)
+  if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceFS, &USBD_CustomHID_fops_FS) != USBD_OK)
   {
     Error_Handler();
   }
 
-  if (USBD_RegisterClassComposite(&hUsbDeviceFS, &USBD_CUSTOM_HID,CLASS_TYPE_HID,hid_ep) != USBD_OK)
+  if (USBD_RegisterClassComposite(&hUsbDeviceFS, &USBD_CUSTOM_HID,CLASS_TYPE_CHID,hid_ep) != USBD_OK)
   {
     Error_Handler();
   }
