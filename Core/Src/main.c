@@ -110,6 +110,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_SET)
+	  {
 		  buffer[3]=0x4E;//keycode data - PgDwn press
 		  USBD_CUSTOM_HID_SendReport_FS(buffer,8);
 		  HAL_Delay(100);
@@ -117,6 +119,7 @@ int main(void)
 		  USBD_CUSTOM_HID_SendReport_FS(buffer,8);
 		  HAL_Delay(100);
 	  }
+  }
   /* USER CODE END 3 */
 }
 
