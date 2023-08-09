@@ -11,3 +11,5 @@
 *.dep
 **/Debug
 **/.settings
+/*.launch
+/.mxproject
