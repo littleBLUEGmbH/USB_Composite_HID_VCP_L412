@@ -68,11 +68,27 @@ uint8_t hid_ep[]={0x83,0x03};
 void MX_USB_Device_Init(void)
 {
   /* USER CODE BEGIN USB_Device_Init_PreTreatment */
-
+#if 0
   /* USER CODE END USB_Device_Init_PreTreatment */
 
   /* Init Device Library, add supported class and start the library. */
-  if (USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
+  if (USBD_Init(&hUsbDeviceFS, &CUSTOM_HID_Desc, DEVICE_FS) != USBD_OK) {
+    Error_Handler();
+  }
+  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CUSTOM_HID) != USBD_OK) {
+    Error_Handler();
+  }
+  if (USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceFS, &USBD_CustomHID_fops_FS) != USBD_OK) {
+    Error_Handler();
+  }
+  if (USBD_Start(&hUsbDeviceFS) != USBD_OK) {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USB_Device_Init_PostTreatment */
+#endif
+
+  /* Init Device Library, add supported class and start the library. */
+  if (USBD_Init(&hUsbDeviceFS, &CUSTOM_HID_Desc, DEVICE_FS) != USBD_OK)
   {
     Error_Handler();
   }
@@ -101,8 +117,6 @@ void MX_USB_Device_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USB_Device_Init_PostTreatment */
-
   /* USER CODE END USB_Device_Init_PostTreatment */
 }
 
