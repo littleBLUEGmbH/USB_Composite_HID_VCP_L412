@@ -27,8 +27,8 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l4xx.h"
-#include "stm32l4xx_hal.h"
+#include "stm32g4xx.h"
+#include "stm32g4xx_hal.h"
 #include "usbd_def.h"
 
 /* USER CODE BEGIN INCLUDE */
@@ -75,7 +75,7 @@
   */
 
 /** USB Device initialization function. */
-void MX_USB_DEVICE_Init(void);
+void MX_USB_Device_Init(void);
 
 /*
  * -- Insert functions declaration here --
@@ -100,3 +100,4 @@ void MX_USB_DEVICE_Init(void);
 #endif
 
 #endif /* __USB_DEVICE__H__ */
+

@@ -41,9 +41,10 @@
 
 /* USER CODE END PFP */
 
+extern void Error_Handler(void);
 /* USB Device Core handle declaration. */
 USBD_HandleTypeDef hUsbDeviceFS;
-extern USBD_DescriptorsTypeDef FS_Desc;
+extern USBD_DescriptorsTypeDef CUSTOM_HID_Desc;
 
 /*
  * -- Insert your variables declaration here --
@@ -64,11 +65,11 @@ uint8_t hid_ep[]={0x83,0x03};
   * Init USB device Library, add supported class and start the library
   * @retval None
   */
-void MX_USB_DEVICE_Init(void)
+void MX_USB_Device_Init(void)
 {
-  /* USER CODE BEGIN USB_DEVICE_Init_PreTreatment */
+  /* USER CODE BEGIN USB_Device_Init_PreTreatment */
 
-  /* USER CODE END USB_DEVICE_Init_PreTreatment */
+  /* USER CODE END USB_Device_Init_PreTreatment */
 
   /* Init Device Library, add supported class and start the library. */
   if (USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
@@ -100,9 +101,9 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USB_DEVICE_Init_PostTreatment */
+  /* USER CODE BEGIN USB_Device_Init_PostTreatment */
 
-  /* USER CODE END USB_DEVICE_Init_PostTreatment */
+  /* USER CODE END USB_Device_Init_PostTreatment */
 }
 
 /**

@@ -30,9 +30,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
-#include "stm32l4xx.h"
-#include "stm32l4xx_hal.h"
+#include "stm32g4xx.h"
+#include "stm32g4xx_hal.h"
 
 /* USER CODE BEGIN INCLUDE */
 
@@ -53,6 +52,9 @@
   * @{
   */
 
+/* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN PV */
+/* USER CODE END PV */
 /**
   * @}
   */
@@ -96,13 +98,11 @@
 
 /* Memory management macros */
 
-/* Memory management macros make sure to use static memory allocation */
-
 /** Alias for memory allocation. */
 #define USBD_malloc         (void *)USBD_static_malloc
 
 /** Alias for memory release. */
-#define USBD_free          USBD_static_free
+#define USBD_free           USBD_static_free
 
 /** Alias for memory set. */
 #define USBD_memset         memset
